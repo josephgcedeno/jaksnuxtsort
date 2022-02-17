@@ -74,9 +74,9 @@ export default {
    ** Plugins to load before mounting the App
    */
   plugins: [
-    { src: '~/plugins/repository' },
-    { src: '~/plugins/components/vue-slick-carousel' },
-    { src: '~/plugins/components/icons' },
+    // { src: '~/plugins/repository' },
+    // { src: '~/plugins/components/vue-slick-carousel' },
+    // { src: '~/plugins/components/icons' },
   ],
   /*
    ** Nuxt.js dev-modules

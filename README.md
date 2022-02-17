@@ -7,18 +7,6 @@ A minimalistic Nuxt Jamstack starter template using TypeScript, Vuetify, and API
 ## Installation
 
 ```
-git clone git@github.com:Nuxify/jaks.ts.git
-```
-
-```
-cd jaks.ts/
-```
-
-```
-cp .env.example .env
-```
-
-```
 npm install
 ```
 
@@ -27,7 +15,7 @@ npm install
 ```
 npm run dev
 ```
-
+ 
 > Generate **Static** Pages
 
 ```
@@ -53,3 +41,4 @@ Made with ❤️ at [Nuxify](https://nuxify.tech)
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
+

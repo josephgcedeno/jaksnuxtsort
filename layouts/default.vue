@@ -1,21 +1,21 @@
 <template>
   <v-app id="app">
-    <Header />
+    <!-- <Header /> -->
     <nuxt />
-    <Footer />
+    <!-- <Footer /> -->
   </v-app>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
 
-import { Footer } from '~/components/footer'
-import { Header } from '~/components/header'
+// import { Footer } from '~/components/footer'
+// import { Header } from '~/components/header'
 
 @Component({
   components: {
-    Header,
-    Footer,
+    // Header,
+    // Footer,
   },
 })
 export default class Default extends Vue {}

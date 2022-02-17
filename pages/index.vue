@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="dataset">
-      <input type="text" ref="inputval" value="" name="datasetval" placeholder="Input Dataset">
+      <input type="text" ref="inputval" value="" name="datasetval" placeholder="Input Dataset eg(5,2,3,44,22,33)">
       <button @click="btnClicked" class="btn btn-outline">Sort</button>
     </div>
     <div class="card-grid">
@@ -57,16 +57,23 @@ export default class Index extends Vue {
   mergesortcontainer:any;
   quicksort:any;
   heapsort:any;
+  timeoutdelay:number = 1000;
 
 
   //datasetval:string ='846335478';
-  datasetval:number[] =[9,8,1,5,6];
+  datasetval:number[] =[44,7,12,33,22,66,21,20,14];
 
   // * * Methods
   btnClicked(){
       this.datasetval = []
+      let inputval:any = this.$refs.inputval;
+      let newdata:number[] = inputval.value.split(",");
+      
+      if(newdata.length==1){
+        alert("Cannot be like this")
+        return;
+      }
       setTimeout(()=>{
-        let inputval:any = this.$refs.inputval;
         this.datasetval = inputval.value.split(",");
       
          setTimeout(this.callSortingFunc,2000);
@@ -74,11 +81,13 @@ export default class Index extends Vue {
 
   }
   callSortingFunc(){
-   // alert("Start Sorting")
+    alert("Start Sorting")
     this.SelectionSort();
     this.BubbleSort();
     this.InsertionSort();
-    this.HeapSort(20);
+    this.HeapSort();
+    this.QuickSort();
+    this.MergeSort();
   }
   
   mounted():void{
@@ -88,7 +97,7 @@ export default class Index extends Vue {
      this.mergesortcontainer = document.querySelector("#app > div > div.container > div.card-grid > div:nth-child(4) > div.card-body > section");
      this.quicksort = document.querySelector("#app > div > div.container > div.card-grid > div:nth-child(5) > div.card-body > section");
      this.heapsort = document.querySelector("#app > div > div.container > div.card-grid > div:nth-child(6) > div.card-body > section");
-     setTimeout(this.callSortingFunc,2000);
+     setTimeout(this.callSortingFunc,1000);
   }
   // selection sort
   async SelectionSort(delay = 300) {
@@ -112,7 +121,7 @@ export default class Index extends Vue {
       await new Promise((resolve:any) =>
         setTimeout(() => {
         resolve();
-        }, 300)
+        }, this.timeoutdelay)
       );
 
       // To store the integer value of jth bar to var1
@@ -148,7 +157,7 @@ export default class Index extends Vue {
       await new Promise((resolve:any) =>
       setTimeout(() => {
         resolve();
-      }, 300)
+      }, this.timeoutdelay)
       );
 
       // Provide skyblue color to the (min-idx)th bar
@@ -174,12 +183,12 @@ export default class Index extends Vue {
               setTimeout(() => {
                   this.bubblesortcontainer.insertBefore(el2, el1);
                   resolve();
-              }, 250);
+              }, this.timeoutdelay);
           });
       });
   }
   // Asynchronous BubbleSort function
-  async BubbleSort(delay = 100) {
+  async BubbleSort(delay = this.timeoutdelay) {
       var blocks:any = document.querySelectorAll("#app > div > div.container > div.card-grid > div:nth-child(2) > div.card-body > section > div");
     
       // BubbleSort Algorithm
@@ -216,7 +225,7 @@ export default class Index extends Vue {
           //changing the color of greatest element 
           //found in the above traversal
           blocks[blocks.length - i - 1]
-                  .style.backgroundColor = "#13CE66";
+                  .style.backgroundColor = "rgb(49, 226, 13)";
       }
   }
   async InsertionSort(delay = 600) {
@@ -247,7 +256,7 @@ export default class Index extends Vue {
         await new Promise((resolve:any) =>
         setTimeout(() => {
           resolve();
-        }, 600)
+        }, this.timeoutdelay)
       );
       
         // For placing selected element at its correct position 
@@ -268,7 +277,7 @@ export default class Index extends Vue {
           await new Promise((resolve:any) =>
             setTimeout(() => {
               resolve();
-            }, 600)
+            }, this.timeoutdelay)
           );
             
           // Provide lightgreen color to the sorted part
@@ -285,7 +294,7 @@ export default class Index extends Vue {
         await new Promise((resolve:any) =>
           setTimeout(() => {
             resolve();
-          }, 600)
+          }, this.timeoutdelay)
         );
           
         // Provide light green color to the ith bar
@@ -294,6 +303,7 @@ export default class Index extends Vue {
 
   }
   async Heapify(n:any, i:any) {
+
     var blocks:any = document.querySelectorAll("#app > div > div.container > div.card-grid > div:nth-child(6) > div.card-body > section > div");
     var largest = i; // Initialize largest as root
     var l = 2 * i + 1; // left = 2*i + 1
@@ -328,7 +338,7 @@ export default class Index extends Vue {
       await new Promise((resolve:any) =>
         setTimeout(() => {
           resolve();
-        }, 250)
+        }, this.timeoutdelay)
       );
     
       // Recursively Hapify the affected sub-tree
@@ -337,65 +347,216 @@ export default class Index extends Vue {
 }
   
 // Asynchronous HeapSort function
-async HeapSort(n=this.datasetval.length) {
-  var blocks:any = document.querySelectorAll("#app > div > div.container > div.card-grid > div:nth-child(6) > div.card-body > section > div");
-  // Build heap (rearrange array)
-  for (var i = n / 2 - 1; i >= 0; i--) {
-    await this.Heapify(n, i);
+  async HeapSort(n:number=this.datasetval.length) {
+    var blocks:any = document.querySelectorAll("#app > div > div.container > div.card-grid > div:nth-child(6) > div.card-body > section > div");
+    // Build heap (rearrange array)
+    for (var i = Math.floor(n / 2 )- 1; i >= 0; i--) {
+      await this.Heapify(n, i);
+    }
+    // One by one extract an element from heap
+    for (var i = n - 1; i > 0; i--) {
+    
+      // Move current root to end
+      var temp1 = blocks[i].style.height;
+      var temp2 = blocks[i].childNodes[0].innerText;
+      blocks[i].style.height = blocks[0].style.height;
+      blocks[0].style.height = temp1;
+      blocks[i].style.backgroundColor = "rgb(49, 226, 13)";
+      blocks[0].style.backgroundColor = "rgb(49, 226, 13)";
+      blocks[i].childNodes[0].innerText = 
+      blocks[0].childNodes[0].innerText;
+      blocks[0].childNodes[0].innerText = temp2;
+    
+      await new Promise((resolve:any) =>
+        setTimeout(() => {
+          resolve();
+        }, this.timeoutdelay)
+      );
+    
+      // Call max Heapify on the reduced heap
+      await this.Heapify(i, 0);
+    }
   }
-  // One by one extract an element from heap
-  for (var i = n - 1; i > 0; i--) {
-  
-    // Move current root to end
+  async lometo_partition(l:number, r:number, delay = this.timeoutdelay) {
+    var blocks:any = document.querySelectorAll("#app > div > div.container > div.card-grid > div:nth-child(5) > div.card-body > section > div");
+    
+    // Storing the value of pivot element
+    var pivot = Number(blocks[r].childNodes[0].innerHTML);
+    var i = l - 1;
+    blocks[r].style.backgroundColor = "red";
+    //document.getElementsByClassName("range")[0].innerText = ``;
+    var range = [l,r]
+    
+    for (var j = l; j <= r - 1; j++) {
+      // To change background-color of the
+      // blocks to be compared
+      //blocks[j].style.backgroundColor = "yellow";
+      // To wait for 700 milliseconds
+      await new Promise((resolve:any) =>
+        setTimeout(() => {
+          resolve();
+        }, delay)
+      );
+      var value =  Number(blocks[j].childNodes[0].innerHTML);
+    
+      // To compare value of two blocks
+      if (value < pivot) {
+        i++;
+        var temp1 = blocks[i].style.height;
+        var temp2 = blocks[i].childNodes[0].innerText;
+        blocks[i].style.height = blocks[j].style.height;
+        blocks[j].style.height = temp1;
+        blocks[i].childNodes[0].innerText =
+        blocks[j].childNodes[0].innerText;
+        blocks[j].childNodes[0].innerText = temp2;
+        //blocks[i].style.backgroundColor = "orange";
+        //if (i != j) blocks[j].style.backgroundColor = "pink";
+        //To wait for 700 milliseconds
+        await new Promise((resolve:any) =>
+          setTimeout(() => {
+            resolve();
+          }, delay)
+        );
+      } else blocks[j].style.backgroundColor = "pink";
+    }
+    // Swapping the ith with pivot element
+    i++;
     var temp1 = blocks[i].style.height;
     var temp2 = blocks[i].childNodes[0].innerText;
-    blocks[i].style.height = blocks[0].style.height;
-    blocks[0].style.height = temp1;
-    blocks[i].childNodes[0].innerText = 
-    blocks[0].childNodes[0].innerText;
-    blocks[0].childNodes[0].innerText = temp2;
-  
+    blocks[i].style.height = blocks[r].style.height;
+    blocks[r].style.height = temp1;
+    blocks[i].childNodes[0].innerText =
+    blocks[r].childNodes[0].innerText;
+    blocks[r].childNodes[0].innerText = temp2;
+    //blocks[r].style.backgroundColor = "pink";
+    //blocks[i].style.backgroundColor = "green";
+    
+    // To wait for 2100 milliseconds
     await new Promise((resolve:any) =>
       setTimeout(() => {
         resolve();
-      }, 250)
+      }, delay*3)
     );
-  
-    // Call max Heapify on the reduced heap
-    await this.Heapify(i, 0);
+    //document.getElementsByClassName("range")[0].innerText = "";
+    range = [];
+    for (var k = 0; k < blocks.length; k++) 
+    blocks[k].style.backgroundColor = "rgb(49, 226, 13)";
+    return i;
   }
-}
     
-
-  generatebars(num:number[]) {
-        
-        for (let i = 0; i < num.length; i++) {
-          // To generate random values from 1 to 100
-          const value = num[i];
-          // To create element "div"
-          const bar = document.createElement("div");
-          // To add class "bar" to "div"
-          bar.classList.add("bar");
-          // Provide height to the bar
-          bar.style.height = `${value * 3}px`;
-          // Translate the bar towards positive X axis
-          bar.style.transform = `translateX(${num[i] * 30}px)`;
-          
-          // To create element "label"
-          let barLabel = document.createElement("label");
-
-          // To add class "bar_id" to "label"
-          barLabel.classList.add("bar_id");
-          // Assign value to "label"
-          barLabel.innerHTML = value.toString();
-          
-          // Append "Label" to "div"
-          bar.appendChild(barLabel);
-          // Append "div" to "data-container div"
-          this.container.appendChild(bar);
-        }
+  // Asynchronous QuickSort function
+  async QuickSort(l=0, r=this.datasetval.length-1) {
+    if (l < r) {
+      // Storing the index of pivot element after partition
+      var pivot_idx = await this.lometo_partition(l, r);
+      // Recursively calling quicksort for left partition
+      await this.QuickSort(l, pivot_idx - 1);
+      // Recursively calling quicksort for right partition
+      await this.QuickSort(pivot_idx + 1, r);
+    }
   }
-   
+  async merge(arr:any, l:number, m:number, r:number)
+  {
+        
+        var n1 = m - l + 1;
+        var n2 = r - m;
+     
+        // Create temp arrays
+        var L = new Array(n1); 
+        var R = new Array(n2);
+        // Copy data to temp arrays L[] and R[]
+        for (var i = 0; i < n1; i++)
+            L[i] ={ data: parseInt(arr[l + i].childNodes[0].innerText), index:l + i , height:arr[l + i].style.height }
+        for (var j = 0; j < n2; j++)
+            R[j] = {data:parseInt(arr[m + 1 + j].childNodes[0].innerText), index:m + 1 + j , height:arr[m + 1 + j].style.height }
+            var delay = 250;
+           // await this.sleep(delay);
+    
+        var i = 0;
+    
+        // Initial index of second subarray
+        var j = 0;
+    
+        // Initial index of merged subarray
+        var k = l;
+    
+        while (i < n1 && j < n2) {
+            arr[k].style.backgroundColor= "rgb(49, 226, 13)";
+
+            if (L[i].data <= R[j].data) {
+         
+                arr[k].childNodes[0].innerText = L[i].data;
+                arr[k].style.height = L[i].height;
+                //arr[L[i].index].style.height = heighttemp;
+                i++;
+            }
+            else {
+          
+                arr[k].childNodes[0].innerText = R[j].data;
+                arr[k].style.height = R[j].height;
+                //arr[R[j].index].style.height = heighttemp;
+                j++;
+            }
+            k++;
+        }
+    
+        // Copy the remaining elements of
+        // L[], if there are any
+        while (i < n1) {
+            arr[k].style.backgroundColor= "rgb(49, 226, 13)";
+
+            arr[k].childNodes[0].innerText = L[i].data;
+            arr[k].style.height= L[i].height;
+            //arr[L[i].index].style.height= heighttemp;
+            i++;
+            k++;
+        }
+    
+        // Copy the remaining elements of
+        // R[], if there are any
+        while (j < n2) {
+            arr[k].style.backgroundColor= "rgb(49, 226, 13)";
+            arr[k].childNodes[0].innerText = R[j].data;
+            arr[k].style.height= R[j].data.height;
+            j++;
+            k++;
+            
+        }
+        
+      
+
+    }
+    sleep(ms:number) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+    
+   async mergeSorting(arr:any,l:number, r:number){
+
+        if(l>=r){
+      
+            return;//returns recursively
+        }
+    
+        var m =Math.floor(l+ Number((r-l)/2));
+        
+        this.mergeSorting(arr,l,m);
+        this.mergeSorting(arr,m+1,r);
+        await new Promise((resolve:any) =>
+          setTimeout(() => {
+            resolve();
+          }, this.timeoutdelay)
+        );
+        this.merge(arr,l,m,r);
+
+        
+    }
+    
+    MergeSort(){
+        var bars:any = document.querySelectorAll("#app > div > div.container > div.card-grid > div:nth-child(4) > div.card-body > section > div");
+        this.mergeSorting(bars, 0, bars.length - 1);
+     
+    }
+ 
 }
 
  
@@ -407,10 +568,8 @@ div.dataset,input{
   padding:2rem;
 }
 .data-container {
-	width: 100%;
 	height: 240px;
   position: relative;
-  bottom: 10px;
 }
 .bar {
 	width: 28px;
@@ -441,9 +600,10 @@ div.dataset,input{
 input{
   flex:4;
   border: 1px solid #000;
-  border-radius: 5px;
+  border-right: none;
 }
 input:focus{
+  outline:none;
 }
 button{
   flex:1;
@@ -451,7 +611,7 @@ button{
 }
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
   gap: 2rem;
   /* align-items: flex-start; */
 }
@@ -495,16 +655,10 @@ button{
 }
 
 .card-body {
-  font-size: .9rem;
-  padding: 0 var(--padding);
-  padding-bottom: 20px;
-  padding-top: 50px;
-  align-items: center;
-  justify-content: center;
+  padding: 10%;  
+  overflow-x: auto;
 }
-.card-body >textarea{
-  border: 1px solid black;
-}
+
 .card-footer {
   margin-top: 1rem;
   padding: var(--padding);
@@ -519,10 +673,12 @@ button{
   font-size: 1rem;
   padding: .5em .75em;
   cursor: pointer;
+  font-weight: bold;
 }
 
 .btn.btn-outline {
   background: none;
+  border:1px solid #000;
   border-left: none ;
   color: #000;
 }
