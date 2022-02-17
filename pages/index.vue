@@ -15,6 +15,7 @@
                     {'transform': 'translateX('+(index * 35)+'px) '},
                 ]"
                 class="bar" 
+                :class="sort=='MergeSort' ? 'merge' : ''"
                  v-for="(value, index) in datasetval"  
                 :key="index"
                 >
@@ -30,7 +31,8 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component, Vue ,namespace} from 'nuxt-property-decorator'
+const GLOBAL_STORE = namespace('global')
 
 @Component({
   head() {
@@ -39,7 +41,6 @@ import { Component, Vue } from 'nuxt-property-decorator'
     }
   }
 })
-
 export default class Index extends Vue {
 
   //data
@@ -64,6 +65,7 @@ export default class Index extends Vue {
   datasetval:number[] =[44,7,12,33,22,66,21,20,14];
 
   // * * Methods
+  @GLOBAL_STORE.Action('setTitle') global_set_title!: (payload: string) => void
   btnClicked(){
       this.datasetval = []
       let inputval:any = this.$refs.inputval;
@@ -81,7 +83,8 @@ export default class Index extends Vue {
 
   }
   callSortingFunc(){
-    alert("Start Sorting")
+    this.$toast.info('Start Sorting')
+
     this.SelectionSort();
     this.BubbleSort();
     this.InsertionSort();
@@ -91,6 +94,10 @@ export default class Index extends Vue {
   }
   
   mounted():void{
+    // print values using runtime config
+     console.log('APP_NAME', this.$config.appName)
+    // Toast notification
+    
      this.container = this.$refs.containerdiv;
      this.bubblesortcontainer = document.querySelector("#app > div > div.container > div.card-grid > div:nth-child(2) > div.card-body > section");
      this.insertionsortcontainer = document.querySelector("#app > div > div.container > div.card-grid > div:nth-child(3) > div.card-body > section");
@@ -579,7 +586,10 @@ div.dataset,input{
 	background-color: rgb(0, 183, 255);
 	transition: 0.2s all ease;
 }
+.bar.merge{
+	transition: 2s all ease;
 
+}
 .bar_id {
 	position: absolute;
 	top: -30px;
