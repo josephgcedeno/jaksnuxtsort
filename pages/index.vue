@@ -571,6 +571,7 @@ export default class Index extends Vue {
 </script>
 
 <style scoped>
+
 div.dataset,input{
   padding:2rem;
 }

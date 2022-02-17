@@ -1,8 +1,12 @@
 const DEBUG = process.env.NODE_ENV !== 'production'
 
+const Rou
 export default {
   ssr: true,
   target: 'static',
+  router:{
+    base:'/nuxtpages/'
+  },
   server: {
     port: process.env.APP_PORT,
     host: process.env.APP_HOST,
@@ -47,15 +51,10 @@ export default {
         property: 'og:url',
         content: process.env.APP_URL,
         vmid: 'og:url',
-      },
-      {
-        property: 'og:image',
-        content: process.env.APP_URL + '/icon.png',
-        vmid: 'og:image',
-      },
+      }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      // { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       {
         rel: 'stylesheet',
         href: 'https://fonts.googleapis.com/css?family=Poppins&display=swap',

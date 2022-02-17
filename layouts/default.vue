@@ -20,3 +20,10 @@ import { Component, Vue } from 'nuxt-property-decorator'
 })
 export default class Default extends Vue {}
 </script>
+
+<style scoped>
+*{
+  padding:2rem;
+  padding-top: 1rem !important; 
+}
+</style>

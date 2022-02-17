@@ -55,3 +55,6 @@ Made with ❤️ at [Nuxify](https://nuxify.tech)
 - We can also include UI Framework such as Boostrap.
 
 
+## To deploy nuxt into github pages
+
+- 
