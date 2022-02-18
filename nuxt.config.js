@@ -1,6 +1,5 @@
 const DEBUG = process.env.NODE_ENV !== 'production'
 
-const Rou
 export default {
   ssr: true,
   target: 'static',
