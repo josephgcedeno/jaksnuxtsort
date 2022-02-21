@@ -1,0 +1,1 @@
+window.__NUXT__=(function(a){return {staticAssetsBase:"\u002Fjaksnuxtsort\u002F_nuxt\u002Fstatic\u002F1645410440",layout:"default",error:a,state:{global:{title:"","state.types":{}}},serverRendered:true,routePath:"\u002F",config:{appName:"Jaks Template try",_app:{basePath:"\u002Fjaksnuxtsort\u002F",assetsPath:"\u002Fjaksnuxtsort\u002F_nuxt\u002F",cdnURL:a}}}}(null));

@@ -1,0 +1,9 @@
+{
+  "name": "Jaks Template try",
+  "short_name": "Jaks Template try",
+  "description": "Try to use jaks template",
+  "icons": [],
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "lang": "en"
+}
